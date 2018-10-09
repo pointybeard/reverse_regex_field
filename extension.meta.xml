@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension id="reverse_regex_field" status="released" xmlns="http://getsymphony.com/schemas/extension/1.0">
+  <name>Reverse Regex Field</name>
+  <description>Auto generates a value based on a regular expression.</description>
+  <repo type="github">https://github.com/pointybeard/reverse_regex_field</repo>
+  <types>
+    <type>Field Types</type>
+  </types>
+  <authors>
+    <author>
+      <name github="pointybeard" symphony="team">Alannah Kearney</name>
+      <website>http://alannahkearney.com</website>
+    </author>
+  </authors>
+  <releases>
+    <release version="1.0" date="2016-12-09" min="2.6">
+        - Initial release
+    </release>
+  </releases>
+</extension>
