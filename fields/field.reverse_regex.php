@@ -126,9 +126,9 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
         return ($count <= 0);
     }
 
-    private function getExistingTicketNumber($entryId)
+    private function getExistingValue($entryId)
     {
-        $existingTicketNumber = Symphony::Database()->fetchVar(
+        $existingValue = Symphony::Database()->fetchVar(
             'value',
             0,
             sprintf(
@@ -141,7 +141,7 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
             )
         );
 
-        return $existingTicketNumber;
+        return $existingValue;
     }
 
     /*-------------------------------------------------------------------------
@@ -258,9 +258,9 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
         // Order ID cannot be changed once it is saved. Look up the existing
         // order ID first and if it's set, use that instead.
         if ($entry_id != null) {
-            $existingTicketNumber = $this->getExistingTicketNumber($entry_id);
-            if ($existingTicketNumber != null && strlen(trim($existingTicketNumber)) > 0) {
-                $data = $existingTicketNumber;
+            $existingValue = $this->getExistingValue($entry_id);
+            if ($existingValue != null && strlen(trim($existingValue)) > 0) {
+                $data = $existingValue;
             }
         }
 
@@ -278,9 +278,9 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
         // Order ID cannot be changed once it is saved. Look up the existing
         // order ID first and if it's set, use that instead.
         if ($entry_id != null) {
-            $existingTicketNumber = $this->getExistingTicketNumber($entry_id);
-            if ($existingTicketNumber != null && strlen(trim($existingTicketNumber)) > 0) {
-                $data = $existingTicketNumber;
+            $existingValue = $this->getExistingValue($entry_id);
+            if ($existingValue != null && strlen(trim($existingValue)) > 0) {
+                $data = $existingValue;
             }
         }
 
