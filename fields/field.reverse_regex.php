@@ -1,8 +1,6 @@
 <?php
 
-require_once FACE . '/interface.exportablefield.php';
-require_once FACE . '/interface.importablefield.php';
-require_once EXTENSIONS . '/reverse_regex_field/extension.driver.php';
+require_once realpath(__DIR__ . "/../vendor") . "/autoload.php";
 
 use ReverseRegexField\Lib;
 
