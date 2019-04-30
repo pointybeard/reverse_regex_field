@@ -3,21 +3,14 @@
     "description": "A field for Symphony CMS that auto generates a value based on a regular expression.",
     "type": "symphonycms-extension",
     "require": {
-        "php": "^5.6",
-        "icomefromthenet/reverse-regex": "^0.0.6",
-        "pointybeard/symphony-pdo": "~0.1"
+        "icomefromthenet/reverse-regex": "*",
+        "pointybeard/symphony-pdo": "*"
     },
     "license": "MIT",
     "authors": [
         {
             "name": "Alannah Kearney",
             "email": "hi@alannahkearney.com"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:pointybeard/ReverseRegex.git"
         }
     ],
     "minimum-stability": "stable",
