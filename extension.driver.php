@@ -1,6 +1,6 @@
 <?php
 
-require realpath(__DIR__ . "/vendor/autoload.php");
+require_once realpath(__DIR__ . "/vendor/autoload.php");
 
 class extension_Reverse_Regex_Field extends Extension
 {
