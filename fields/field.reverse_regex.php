@@ -89,7 +89,7 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
             $generator->generate($result, new ReverseRegex\Random\SimpleRandom());
             $tries--;
 
-        // If the unique flag is on, we need to keep regenerating the result
+            // If the unique flag is on, we need to keep regenerating the result
         // until we find something unique. Problem is, if the scope of possible
         // values is too small (due to a limited pattern), we could end up in
         // and endless loop. This will keep testing for uniqueness until either
