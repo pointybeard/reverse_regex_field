@@ -1,6 +1,8 @@
 <?php
 
-namespace ReverseRegexField\Lib\Exceptions;
+declare(strict_types=1);
+
+namespace pointybeard\Symphony\Extensions\ReverseRegexField\Exceptions;
 
 final class CouldNotFindUniqueValueException extends \Exception
 {
