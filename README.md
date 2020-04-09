@@ -1,10 +1,15 @@
-# Symphony CMS - Reverse Regex Field
+# Reverse Regex Field for Symphony CMS
+
+-   Version: v2.0.0
+-   Date: April 09 2020
+-   [Release notes](https://github.com/pointybeard/reverse_regex_field/blob/master/CHANGELOG.md)
+-   [GitHub repository](https://github.com/pointybeard/reverse_regex_field)
 
 Field for [Symphony CMS](http://getsymphony.com) that auto generates a value based on a regular expression.
 
 ## Installation
 
-Information about [installing and updating extensions](http://getsymphony.com/learn/tasks/view/install-an-extension/) can be found in the Symphony documentation at <http://getsymphony.com/learn/>.
+This is an extension for [Symphony CMS](http://getsymphony.com). Add it to the `/extensions` folder of your Symphony CMS installation, then enable it through the interface.
 
 ### Requirements
 
@@ -21,4 +26,4 @@ We encourage you to contribute to this project. Please check out the [Contributi
 
 ## License
 
-"Symphony CMS - Reverse Regex Field" is released under the [MIT License](http://www.opensource.org/licenses/MIT).
+"Reverse Regex Field for Symphony CMS" is released under the [MIT License](http://www.opensource.org/licenses/MIT).
