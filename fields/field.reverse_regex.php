@@ -1,8 +1,10 @@
 <?php
 
-require_once realpath(__DIR__ . "/../vendor") . "/autoload.php";
+declare(strict_types=1);
 
-use ReverseRegexField\Lib;
+require_once realpath(__DIR__.'/../vendor').'/autoload.php';
+
+use pointybeard\Symphony\Extensions\ReverseRegexField;
 
 class FieldReverse_Regex extends Field implements ExportableField, ImportableField
 {
@@ -14,12 +16,12 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
 
         $this->set('required', 'no');
 
-        extension_Reverse_Regex_Field::init();
+        Extension_Reverse_Regex_Field::init();
     }
 
     public function commit()
     {
-        if (!parent::commit() || $this->get('id') === false) {
+        if (!parent::commit() || false === $this->get('id')) {
             return false;
         }
 
@@ -37,11 +39,11 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
             $errors['pattern'] = __('This is a required field.');
         }
 
-        return (
+        return
             !empty($errors)
                 ? self::__ERROR__
                 : self::__OK__
-        );
+        ;
     }
 
     /*-------------------------------------------------------------------------
@@ -77,17 +79,17 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
         $result = null;
 
         $generator = (new \ReverseRegex\Parser(
-            new \ReverseRegex\Lexer($this->get("pattern")),
-            new \ReverseRegex\Generator\Scope,
-            new \ReverseRegex\Generator\Scope
+            new \ReverseRegex\Lexer($this->get('pattern')),
+            new \ReverseRegex\Generator\Scope(),
+            new \ReverseRegex\Generator\Scope()
         ))->parse()->getResult();
 
         $tries = 1000;
 
         do {
-            $result = "";
+            $result = '';
             $generator->generate($result, new ReverseRegex\Random\SimpleRandom());
-            $tries--;
+            --$tries;
 
             // If the unique flag is on, we need to keep regenerating the result
         // until we find something unique. Problem is, if the scope of possible
@@ -95,13 +97,13 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
         // and endless loop. This will keep testing for uniqueness until either
         // a unique value is found or we hit 1000 tries.
         } while (
-            strtolower($this->get("unique")) == 'yes' &&
+            'yes' == strtolower($this->get('unique')) &&
             $tries > 0 &&
             !$this->isUnique($result)
         );
 
         if (!$this->isUnique($result)) {
-            throw new Lib\Exceptions\CouldNotFindUniqueValueException($this->get("pattern"));
+            throw new ReverseRegexField\Exceptions\CouldNotFindUniqueValueException($this->get('pattern'));
         }
 
         return $result;
@@ -109,7 +111,7 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
 
     private function isUnique($value)
     {
-        $count = (int)Symphony::Database()->fetchVar(
+        $count = (int) Symphony::Database()->fetchVar(
             'count',
             0,
             sprintf(
@@ -121,7 +123,7 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
             )
         );
 
-        return ($count <= 0);
+        return $count <= 0;
     }
 
     private function getExistingValue($entryId)
@@ -130,10 +132,10 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
             'value',
             0,
             sprintf(
-                "SELECT `value`
+                'SELECT `value`
                 FROM `tbl_entries_data_%d`
                 WHERE `entry_id` = %d
-                LIMIT 1",
+                LIMIT 1',
                 $this->get('id'),
                 $entryId
             )
@@ -149,14 +151,14 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
     public function createTable()
     {
         return Symphony::Database()->query(
-            "CREATE TABLE IF NOT EXISTS `tbl_entries_data_" . $this->get('id') . "` (
+            'CREATE TABLE IF NOT EXISTS `tbl_entries_data_'.$this->get('id').'` (
               `id` int(11) unsigned NOT null auto_increment,
               `entry_id` int(11) unsigned NOT null,
               `value` varchar(36) default null,
               PRIMARY KEY  (`id`),
               UNIQUE KEY `entry_id` (`entry_id`),
               KEY `value` (`value`)
-            ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;'
         );
     }
 
@@ -168,7 +170,7 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
     {
         parent::displaySettingsPanel($wrapper, $errors);
 
-        ########### REGEX PATTERN ###########
+        //########## REGEX PATTERN ###########
         $label = Widget::Label(__('Pattern'));
         $label->setAttribute('class', 'column');
         $label->appendChild(Widget::Input('fields['.$this->get('sortorder').'][pattern]', $this->get('pattern')));
@@ -182,19 +184,17 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
         }
 
         $wrapper->appendChild(new XMLElement('p', __('Pattern must be a valid regular expressions. See <a href="https://github.com/icomefromthenet/ReverseRegex/tree/v0.0.6.3#regex-support">here for a list of supported patterns</a>. This will also be used to validate input if not auto-generated.'), array('class' => 'help')));
-        #################################
+        //################################
 
-
-        ########### UNIQUENESS CHECKBOX ###########
+        //########## UNIQUENESS CHECKBOX ###########
         $label = Widget::Label();
         $input = Widget::Input('fields['.$this->get('sortorder').'][unique]', 'yes', 'checkbox');
-        if ($this->get('unique') == 'yes') {
+        if ('yes' == $this->get('unique')) {
             $input->setAttribute('checked', 'checked');
         }
-        $label->setValue($input->generate() . ' ' . __('Only generate unique values'));
+        $label->setValue($input->generate().' '.__('Only generate unique values'));
         $wrapper->appendChild($label);
-        #################################
-
+        //################################
 
         // Requirements and table display
         $this->appendStatusFooter($wrapper);
@@ -209,14 +209,14 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
         $value = General::sanitize(isset($data['value']) ? $data['value'] : $this->generateValueFromPattern());
         $label = Widget::Label($this->get('label'));
 
-        if ($this->get('required') !== 'yes') {
+        if ('yes' !== $this->get('required')) {
             $label->appendChild(new XMLElement('i', __('Optional')));
         }
 
         // Add the disabled field. It won't make it to the POST data
         $label->appendChild(Widget::Input(
             'reverseRegexField-disabeld',
-            (strlen($value) != 0 ? $value : null),
+            (0 != strlen($value) ? $value : null),
             'text',
             ['disabled' => 'disabled']
         ));
@@ -229,12 +229,12 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
                 $this->get('element_name'),
                 $fieldnamePostfix
             ),
-            (strlen($value) != 0 ? $value : null),
+            (0 != strlen($value) ? $value : null),
             'text',
             ['hidden' => 'hidden']
         ));
 
-        if ($flagWithError != null) {
+        if (null != $flagWithError) {
             $wrapper->appendChild(Widget::Error($label, $flagWithError));
         } else {
             $wrapper->appendChild($label);
@@ -249,15 +249,15 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
             $data = $data['value'];
         }
 
-        if (strlen(trim($data)) == 0) {
+        if (0 == strlen(trim($data))) {
             $data = $this->generateValueFromPattern();
         }
 
         // Order ID cannot be changed once it is saved. Look up the existing
         // order ID first and if it's set, use that instead.
-        if ($entry_id != null) {
+        if (null != $entry_id) {
             $existingValue = $this->getExistingValue($entry_id);
-            if ($existingValue != null && strlen(trim($existingValue)) > 0) {
+            if (null != $existingValue && strlen(trim($existingValue)) > 0) {
                 $data = $existingValue;
             }
         }
@@ -269,21 +269,21 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
     {
         $status = self::__OK__;
 
-        if (strlen(trim($data)) == 0) {
+        if (0 == strlen(trim($data))) {
             $data = $this->generateValueFromPattern();
         }
 
         // Order ID cannot be changed once it is saved. Look up the existing
         // order ID first and if it's set, use that instead.
-        if ($entry_id != null) {
+        if (null != $entry_id) {
             $existingValue = $this->getExistingValue($entry_id);
-            if ($existingValue != null && strlen(trim($existingValue)) > 0) {
+            if (null != $existingValue && strlen(trim($existingValue)) > 0) {
                 $data = $existingValue;
             }
         }
 
         $result = [
-            'value' => $data
+            'value' => $data,
         ];
 
         return $result;
@@ -297,16 +297,16 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
     {
         $value = $data['value'];
 
-        if ($encode === true) {
+        if (true === $encode) {
             $value = General::sanitize($value);
         } else {
-            include_once TOOLKIT . '/class.xsltprocess.php';
+            include_once TOOLKIT.'/class.xsltprocess.php';
 
-            if (!General::validateXML($data['value'], $errors, false, new XsltProcess)) {
+            if (!General::validateXML($data['value'], $errors, false, new XsltProcess())) {
                 $value = html_entity_decode($data['value'], ENT_QUOTES, 'UTF-8');
                 $value = $this->__replaceAmpersands($value);
 
-                if (!General::validateXML($value, $errors, false, new XsltProcess)) {
+                if (!General::validateXML($value, $errors, false, new XsltProcess())) {
                     $value = General::sanitize($data['value']);
                 }
             }
@@ -324,15 +324,15 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
     public function getImportModes()
     {
         return array(
-            'getValue' =>       ImportableField::STRING_VALUE,
-            'getPostdata' =>    ImportableField::ARRAY_VALUE
+            'getValue' => ImportableField::STRING_VALUE,
+            'getPostdata' => ImportableField::ARRAY_VALUE,
         );
     }
 
     public function prepareImportValue($data, $mode, $entry_id = null)
     {
         $message = $status = null;
-        $modes = (object)$this->getImportModes();
+        $modes = (object) $this->getImportModes();
 
         if ($mode === $modes->getValue) {
             return $data;
@@ -356,7 +356,7 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
     {
         return array(
             'getUnformatted' => ExportableField::UNFORMATTED,
-            'getPostdata' =>    ExportableField::POSTDATA
+            'getPostdata' => ExportableField::POSTDATA,
         );
     }
 
@@ -365,13 +365,14 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
      * possible modes.
      *
      * @param mixed $data
-     * @param integer $mode
-     * @param integer $entry_id
+     * @param int   $mode
+     * @param int   $entry_id
+     *
      * @return string|null
      */
     public function prepareExportValue($data, $mode, $entry_id = null)
     {
-        $modes = (object)$this->getExportModes();
+        $modes = (object) $this->getExportModes();
 
         // Export unformatted:
         if ($mode === $modes->getUnformatted || $mode === $modes->getPostdata) {
@@ -395,7 +396,7 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
             $this->buildRegexSQL($data[0], array('value'), $joins, $where);
         } elseif ($andOperation) {
             foreach ($data as $value) {
-                $this->_key++;
+                ++$this->_key;
                 $value = $this->cleanValue($value);
                 $joins .= "
                     LEFT JOIN
@@ -417,7 +418,7 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
                 $value = $this->cleanValue($value);
             }
 
-            $this->_key++;
+            ++$this->_key;
             $data = implode("', '", $data);
             $joins .= "
                 LEFT JOIN
