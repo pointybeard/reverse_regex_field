@@ -1,22 +1,25 @@
 {
     "name": "pointybeard/reverse-regex-field",
     "description": "A field for Symphony CMS that auto generates a value based on a regular expression.",
-    "type": "symphonycms-extension",
-    "require": {
-        "icomefromthenet/reverse-regex": "*",
-        "pointybeard/symphony-pdo": "*"
-    },
+    "homepage": "https://github.com/pointybeard/reverse_regex_field",
     "license": "MIT",
     "authors": [
         {
             "name": "Alannah Kearney",
-            "email": "hi@alannahkearney.com"
+            "email": "hi@alannahkearney.com",
+            "homepage": "http://alannahkearney.com",
+            "role": "Developer"
         }
     ],
+    "require": {
+        "php": ">=7.2",
+        "icomefromthenet/reverse-regex": "~0.1.0",
+        "pointybeard/symphony-pdo": "~0.1.7.0"
+    },
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "ReverseRegexField\\": "src/"
+            "pointybeard\\Symphony\\Extensions\\": "src/"
         }
     }
 }
