@@ -1,0 +1,32 @@
+{
+    "id": "reverse_regex_field",
+    "name": "Reverse Regex Field",
+    "description": "Field for Symphony CMS that auto generates a value based on a regular expression.",
+    "repo": "https://github.com/pointybeard/reverse_regex_field.git",
+    "homepage": "https://github.com/pointybeard/reverse_regex_field",
+    "type": [
+        "Field"
+    ],
+    "authors": [
+        {
+            "name": "Alannah Kearney",
+            "email": "hi@alannahkearney.com",
+            "homepage": "http://alannahkearney.com",
+            "role": "Developer"
+        }
+    ],
+    "releases": [
+        {
+            "version": "2.0.0",
+            "date": "2020-04-10",
+            "min": "2.7.10",
+            "max": "2.x.x"
+        },
+        {
+            "version": "1.0.0",
+            "date": "2018-10-09",
+            "min": "2.7.10",
+            "max": "2.x.x"
+        }
+    ]
+}
