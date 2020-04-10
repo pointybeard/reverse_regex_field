@@ -1,19 +1,26 @@
 # Reverse Regex Field for Symphony CMS
 
--   Version: v2.0.0
--   Date: April 09 2020
+-   Version: 2.0.0
+-   Date: April 10 2020
 -   [Release notes](https://github.com/pointybeard/reverse_regex_field/blob/master/CHANGELOG.md)
 -   [GitHub repository](https://github.com/pointybeard/reverse_regex_field)
 
 Field for [Symphony CMS](http://getsymphony.com) that auto generates a value based on a regular expression.
 
-## Installation
-
-This is an extension for [Symphony CMS](http://getsymphony.com). Add it to the `/extensions` folder of your Symphony CMS installation, then enable it through the interface.
-
 ### Requirements
 
-This extension requires the **[icomefromthenet/reverse-regex](https://packagist.org/packages/icomefromthenet/reverse-regex)** and **[pointybeard/symphony-pdo](https://packagist.org/packages/pointybeard/symphony-pdo)** packages to be installed via Composer. Make sure you run `composer update` on this extension directory.
+This extension requires PHP 7.3 or greater and depends on the following Composer libraries:
+
+-   [Symphony CMS: Extended Base Class Library](https://github.com/pointybeard/symphony-extended)
+-   [ReverseRegex](https://github.com/icomefromthenet/ReverseRegex)
+
+## Installation
+
+This is an extension for [Symphony CMS](http://getsymphony.com).
+
+- Download or clone this repository and add it to the `/extensions` directory of your Symphony CMS installation.
+- Run `composer update` from inside the `/extensions/reverse_regex_field` directory
+- Finally, install it via the Symphony CMS  Systems > Extensions administration interface.
 
 ## Support
 
