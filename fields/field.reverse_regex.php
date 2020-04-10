@@ -15,8 +15,6 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
         $this->_required = true;
 
         $this->set('required', 'no');
-
-        Extension_Reverse_Regex_Field::init();
     }
 
     public function commit()
