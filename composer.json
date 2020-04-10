@@ -12,14 +12,17 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.3",
         "icomefromthenet/reverse-regex": "~0.1.0",
-        "pointybeard/symphony-pdo": "~0.1.7.0"
+        "pointybeard/symphony-extended": "~1.0"
     },
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "pointybeard\\Symphony\\Extensions\\": "src/"
-        }
+        },
+        "files": [
+            "extension.driver.php"
+        ]
     }
 }
