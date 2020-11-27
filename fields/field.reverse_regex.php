@@ -25,7 +25,7 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
 
         return FieldManager::saveSettings($this->get('id'), [
             'pattern' => $this->get('pattern'),
-            'unique' => $this->get('unique'),
+            'unique' => $this->get('unique') ?? 'no',
         ]);
     }
 
@@ -84,23 +84,22 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
 
         $tries = 1000;
 
-        do {
-            $result = '';
-            $generator->generate($result, new ReverseRegex\Random\SimpleRandom());
-            --$tries;
-
-            // If the unique flag is on, we need to keep regenerating the result
+        // If the unique flag is on, we need to keep regenerating the result
         // until we find something unique. Problem is, if the scope of possible
         // values is too small (due to a limited pattern), we could end up in
         // and endless loop. This will keep testing for uniqueness until either
         // a unique value is found or we hit 1000 tries.
+        do {
+            $result = '';
+            $generator->generate($result, new ReverseRegex\Random\SimpleRandom());
+            --$tries;
         } while (
             'yes' == strtolower($this->get('unique')) &&
             $tries > 0 &&
-            !$this->isUnique($result)
+            false == $this->isUnique($result)
         );
 
-        if (!$this->isUnique($result)) {
+        if (false == $this->isUnique($result)) {
             throw new ReverseRegexField\Exceptions\CouldNotFindUniqueValueException($this->get('pattern'));
         }
 
