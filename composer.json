@@ -11,11 +11,18 @@
             "role": "Developer"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/pointybeard-forks/ReverseRegex.git"
+        }
+    ],
     "require": {
         "php": ">=7.3",
-        "icomefromthenet/reverse-regex": "~0.1.0",
+        "icomefromthenet/reverse-regex": "dev-master",
         "pointybeard/symphony-extended": "~1.0"
     },
+
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
