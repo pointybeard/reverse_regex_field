@@ -267,7 +267,7 @@ class FieldReverse_Regex extends Field implements ExportableField, ImportableFie
     {
         $status = self::__OK__;
 
-        if (0 == strlen(trim($data))) {
+        if (0 == strlen(trim((string)$data))) {
             $data = $this->generateValueFromPattern();
         }
 
