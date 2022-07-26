@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=7.3",
-        "pointybeard/reverse-regex": "^1.0",
+        "pointybeard/reverse-regex": "<=1.0.0.2",
         "pointybeard/symphony-extended": "~1.0"
     },
 
